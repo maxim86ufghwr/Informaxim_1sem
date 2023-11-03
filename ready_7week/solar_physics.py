@@ -115,7 +115,7 @@ def move_space_object(body, dt):
     ax = body.Fx * dt
     body.Vx = body.Vx + ax * dt
     body.x += body.Vx * dt + (ax * dt**2)/2
-    ay = gravitational_constant * Star.m / body.R**2 + body.Fy * dt
+    ay = body.Vx**2 / body.R + body.Fy * dt
     body.Vy += body.Vy + ay * dt
     body.y += body.Vy * dt + (ay * dt**2)/2
     '''zhitь ( ͡ಥ ͜ʖ ͡ಥ)'''
