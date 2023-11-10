@@ -97,12 +97,12 @@ def calculate_force(body, space_objects):
     body.Fx = body.Fy = 0
     for obj in space_objects:
         if body == obj:
-            body.Fx = 0.1
-            body.Fy = 0.1
-        r = randint(1, 100) / 100
-        body.Fx += -randint(1, 100) / 100
-        body.Fy += -randint(1, 100) / 100
-
+            body.Fx += 0
+            body.Fy += 0
+        else:
+            r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
+            body.Fx += (gravitational_constant * body.m * obj.m / r**2) * ((body.x - obj.x) / r)
+            body.Fy += (gravitational_constant * body.m * obj.m / r**2) * ((body.y - obj.y) / r)
 
 def move_space_object(body, dt):
     """Перемещает тело в соответствии с действующей на него силой.
@@ -111,13 +111,12 @@ def move_space_object(body, dt):
 
     **body** — тело, которое нужно переместить.
     """
-
-    ax = body.Fx * dt
-    body.Vx = body.Vx + ax * dt
-    body.x += body.Vx * dt + (ax * dt**2)/2
-    ay = body.Vx**2 / body.R + body.Fy * dt
-    body.Vy += body.Vy + ay * dt
-    body.y += body.Vy * dt + (ay * dt**2)/2
+    ax = body.Fx / body.m
+    body.Vx += ax * dt
+    body.x += body.Vx * dt
+    ay = body.Fy / body.m
+    body.Vy += ay * dt
+    body.y += body.Vy * dt
     '''zhitь ( ͡ಥ ͜ʖ ͡ಥ)'''
     '''Why so dificult? (ಥ﹏ಥ)'''
 
