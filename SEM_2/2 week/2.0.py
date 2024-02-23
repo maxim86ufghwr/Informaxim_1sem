@@ -78,4 +78,3 @@ print(tree.tree)
 print(Sum(tree,0,5))
 tree.update(6, 99)
 print(tree.tree)
-# P.s. я ввёл небольшой костыль т.к. при 0 он постоянно брал значение из корня
