@@ -18,7 +18,7 @@ def read_graph_as_neigh_list():
         if edge[0] not in graph_dict.keys():
             graph_dict[edge[0]] = frozenset([edge[1]])
         else:
-            graph_dict[edge[0]]= graph_dict[edge[0]] | frozenset([edge[1]])
+            graph_dict[edge[0]] = graph_dict[edge[0]] | frozenset([edge[1]])
     return graph_dict
 
 def read_graph_as_neigh_matrix():
@@ -47,16 +47,24 @@ def DFS(graph, v, visited=[]):
         if neigh not in visited:
             DFS(graph, neigh, visited)
 
-def has_cycle(graph, v, visited=[]):
-    result = False
-    visited.append(v)
-    for neigh in graph[v]:
-        if neigh in visited:
-            result = True
-            return result
-        if result == False:
-            result = has_cycle(graph, neigh, visited)
-    return result
+def has_cycle_util(node, vis=set(), is_cyc=set()): #извините но без перебора он выдаёт неверное значение если у одной вешины два предка и одного из предков предок другой предок
+    if node in is_cyc:
+        return True
+    elif node in vis:
+        return False
+    vis.add(node)
+    is_cyc.add(node)
+
+    for neigh in graph[node]:
+        if has_cycle_util(neigh, vis, is_cyc):
+            return True
+    is_cyc.remove(node)
+    return False
+def has_cycle(graph):
+    for node in graph:
+        if has_cycle_util(node):
+            return True
+    return False
 def DFS_stack(gra, v, visited = []):
     print(v)
     stack = []
@@ -131,7 +139,8 @@ def how_ways(gr, start, fin):
 
 graph = read_graph_as_neigh_list()
 DFS(graph, 1)
-print(has_cycle(graph, 1))
+print(graph)
+print(has_cycle(graph))
 DFS_stack(graph, 1)
 topologikal(graph, 1, 'print')
 is_v_vertice_of_u(graph, 2)
