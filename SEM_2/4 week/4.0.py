@@ -47,7 +47,7 @@ def DFS(graph, v, visited=[]):
         if neigh not in visited:
             DFS(graph, neigh, visited)
 
-def has_cycle_util(node, vis=set(), is_cyc=set()): #извините но без перебора он выдаёт неверное значение если у одной вешины два предка и одного из предков предок другой предок
+def has_cycle_deep(node, vis=set(), is_cyc=set()): #извините но без перебора он выдаёт неверное значение если у одной вешины два предка и одного из предков предок другой предок
     if node in is_cyc:
         return True
     elif node in vis:
@@ -56,13 +56,13 @@ def has_cycle_util(node, vis=set(), is_cyc=set()): #извините но без
     is_cyc.add(node)
 
     for neigh in graph[node]:
-        if has_cycle_util(neigh, vis, is_cyc):
+        if has_cycle_deep(neigh, vis, is_cyc):
             return True
     is_cyc.remove(node)
     return False
 def has_cycle(graph):
     for node in graph:
-        if has_cycle_util(node):
+        if has_cycle_deep(node):
             return True
     return False
 def DFS_stack(gra, v, visited = []):
