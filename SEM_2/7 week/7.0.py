@@ -1,6 +1,7 @@
 from heapq import *
 def read_graph_as_edges_w():
-    n = int(input('!!!Внимрние заполнять в порядке:: ВЕС -- НАЧАЛО -- КОНЕЦ'))
+    print('!!!Внимрние заполнять в порядке:: ВЕС -- НАЧАЛО -- КОНЕЦ!!!!!!')
+    n = int(input())
     graph = [list(map(int, input().split())) for i in range(n)]
     return graph
 
@@ -170,16 +171,19 @@ def prim(graph):
 
 
 def find_MST(graph_list):
-    gr = graph_list
-    ans = {tuple(i): 'Always' for i in gr}
-    weight = set(i[0] for i in gr)
-    div_l = {i: [] for i in weight}
-    gr.sort()
+    ve = set()
+    for i in graph_list:
+        ve.add(i[1])
+        ve.add(i[2])
+    ans = {tuple(i): 'Always' for i in graph_list}
+    weight = set(i[0] for i in graph_list)
+    div_l = {i: None for i in weight}
+    graph_list.sort()
     j = 0
     for i in weight:
         f = []
-        while j < len(gr) and i == gr[j][0]:
-            f.append(gr[j])
+        while j < len(graph_list) and i == graph_list[j][0]:
+            f.append(tuple(graph_list[j]))
             j += 1
         div_l[i] = tuple(f)
 
@@ -193,17 +197,30 @@ def find_MST(graph_list):
             else:
                 inte.append(ver)
         inter = inter + inte
-    ve = set()
-    for i in ans.keys():
-        if ans[i] == 'Always':
-            ve.add(i)
     mst = kruskal(graph_list)
     for i in ans.keys():
         if list(i) not in mst and ans[i] != 'Never':
             ans[i] = 'at least one'
+    for i in div_l.values():
+        le = []
+        al = []
+        for j in i:
+            if ans[j] == 'at least one':
+                le.append(j)
+            if ans[j] == 'Always':
+                al.append(j)
+        g = graph_list.copy()
+        rev = set()
+        if len(le) != 0:
+            for q in al:
+                g.remove(list(q))
+            ms = kruskal(g)
+            for k in ms:
+                rev.add(k[1])
+                rev.add(k[2])
+            if len(ve) == len(rev):
+                ans[q] = 'at least one'
     print(ans)
-
-
 
 
 graph_list = read_graph_as_edges_w()
@@ -219,6 +236,11 @@ graph = read_graph_as_neigh_list_w(graph_list)
 100 1 2
 1 2 3
 1 3 1
+4
+1 1 2
+1 2 3
+4 1 4
+4 3 4
 '''
 '''G = read_graph_as_neigh_matrix_w()
 D, P = FW(G)
