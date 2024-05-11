@@ -65,55 +65,6 @@ def has_cycle_w(graph, v, visited=[]):
     return result
 
 
-def topologicalSortUtil_w(graph, v, visited, stack=[], i=1):
-    visited[v] = True
-    for v in graph:
-        if visited[i] == False:
-            topologicalSortUtil_w(graph, i, visited, stack)
-            stack.append(v)
-        i += 1
-
-
-def topologicalSort_w(graph):
-    if has_cycle_w(graph, v=1) == False:
-        visited = [False] * (len(graph) + 1)
-        stack = []
-        for i in range(len(graph)):
-            if visited[i] == False:
-                topologicalSortUtil_w(i, visited, stack)
-        return stack
-    else:
-        t = 'Невозможно выполнить из-за присутсвия цикла в данном графе...'
-        return t
-
-
-def road_in_v_from_u_w(graph, v, u):
-    Topolog_list = topologicalSort_w(graph)
-    if type(Topolog_list) == str:
-        return Topolog_list
-    else:
-        First_index = Topolog_list.index(v)
-        Second_index = Topolog_list.index(u)
-        answer = 0
-        visited = [v]
-        if First_index < Second_index:
-            return answer
-        else:
-            for i in graph:
-                if i in visited:
-                    answer += 1
-                else:
-                    pass
-                visited.append(i)
-            return answer
-
-
-def father_n_w(graph, v, u):
-    result = road_in_v_from_u_w(graph, v, u)
-    if result > 0:
-        return True
-    else:
-        return False
 
 
 def bfs_w(graph, v):
@@ -204,7 +155,7 @@ def massive():
         index_1 = edge[0] - 1
         index_2 = edge[1] - 1
         res_matrix[index_1][index_2] = edge[2]
-    res = FB(graph, 1)
+    res = FB(res_matrix, 1)
     if res == 'есть отрицательный цикл':
         print(res)
     else:
