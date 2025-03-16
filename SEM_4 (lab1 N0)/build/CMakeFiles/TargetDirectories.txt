@@ -1,0 +1,3 @@
+C:/Users/mdiva/Desktop/Github_max_iv/SEM_4/build/CMakeFiles/myProject.dir
+C:/Users/mdiva/Desktop/Github_max_iv/SEM_4/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/mdiva/Desktop/Github_max_iv/SEM_4/build/CMakeFiles/ZERO_CHECK.dir
